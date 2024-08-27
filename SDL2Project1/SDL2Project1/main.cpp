@@ -34,9 +34,18 @@ int main(int argc, char* args[])
 	}
 
 	bool keepLooping = true;
+	SDL_Event event;
 	//Game Loop
 	while (keepLooping)
 	{
+		while (SDL_PollEvent(&event) != 0)
+		{
+			if (event.type == SDL_QUIT)
+			{
+				keepLooping = false;
+			}
+		}
+
 		SDL_SetRenderDrawColor(renderer, 21, 209, 249, 255);//RGB (e.g R = 0-255)
 		//clear entire screen with current draw colour
 		SDL_RenderClear(renderer);
@@ -54,19 +63,13 @@ int main(int argc, char* args[])
 		SDL_RenderPresent(renderer);
 
 		//ticks are milliseconds since the start of SDL init
-		if (SDL_GetTicks() > 5000)//1000ms = 1second
-		{
-			keepLooping = false;
-		}
+		
 	}
 	//CLEANUP
-	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
 	SDL_Quit();
 
 	//lets user interact by pressing anykey
-	system("pause");
-	return 0;
-
 	return 0;
 }
