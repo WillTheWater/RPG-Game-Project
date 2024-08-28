@@ -1,4 +1,7 @@
-
+#include "Character.h"
+#include "Player.h"
+#include "Enemy.h"
+#include "MapScreen.h"
 #include <SDL.h>
 #include <SDL_image.h>
 #include <stdio.h>
@@ -17,7 +20,7 @@ int main(int argc, char* args[])
 
 	}
 
-	SDL_Window* window = SDL_CreateWindow("RPG GAME!", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 960, SDL_WINDOW_SHOWN);
+	SDL_Window* window = SDL_CreateWindow("RPG GAME", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 960, SDL_WINDOW_SHOWN);
 	if (window == NULL)
 	{
 		std::cout << "SDL window Error: " << SDL_GetError() << std::endl;
@@ -39,9 +42,24 @@ int main(int argc, char* args[])
 	SDL_Texture* testImage = IMG_LoadTexture(renderer, "assets/girlIdle.png");
 	if (testImage == NULL) { std::cout << "image failed to load\n"; }
 
+	// Item Array 0=no item, 1=potion, 2=bomb, 3=ATKboost, 4=DEFboost
+	int items[10];
+	for (int i = 0; i < 5; ++i) { items[i] = 0; }
+	items[0] = 0;
+	items[1] = 1;
+	items[2] = 2;
+	items[3] = 3;
+	items[4] = 4;
+	for (int i = 0; i < 5; ++i)
+	{
+		std::cout << items[i] << std::endl;
+	}
 
+	// A player object
+	Player player;
 
-
+	// Setup MapScreen Object
+	MapScreen map(renderer, &player, items);
 
 	bool keepLooping = true;
 	SDL_Event event;
@@ -83,6 +101,8 @@ int main(int argc, char* args[])
 		destRect.h = 137;
 		SDL_RenderCopy(renderer, testImage, &srcRect, &destRect);
 		
+		map.draw();
+
 		//swaps drawing buffer
 		SDL_RenderPresent(renderer);
 
@@ -91,6 +111,7 @@ int main(int argc, char* args[])
 	//CLEANUP
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
+	SDL_DestroyTexture(testImage);
 	SDL_Quit();
 	return 0;
 }
