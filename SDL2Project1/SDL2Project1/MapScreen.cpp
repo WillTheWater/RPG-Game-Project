@@ -9,16 +9,27 @@ MapScreen::MapScreen(SDL_Renderer* renderer, Player* player, int* items)
 	// Loop through map to zero out map.
 	for (int i = 0; i < 10; ++i)
 	{
-		for (int k = 0; k < 10; ++k)
+		for (int j = 0; j < 10; ++j)
 		{
-			map[i][k] = 0;
+			map[i][j] = 0;
 		}
 	}
-	map[1][1] = 1;
-	map[2][1] = 1;
-	map[3][3] = 1;
-	map[6][1] = 1;
-	map[4][4] = 1;
+	// Loading txt file
+	std::fstream mapfile("assets/map.txt");
+	if (mapfile.is_open())
+	{
+		for (int i = 0; i < 10; ++i)
+		{
+			for (int j = 0; j < 10; ++j)
+			{
+				char grid;
+				mapfile >> grid;
+				if (grid == '0') { map[j][i] = 0; } // Wall
+				else { map[j][i] = 1; } // Ground
+			}
+		}
+	}
+	mapfile.close();
 }
 
 MapScreen::~MapScreen()

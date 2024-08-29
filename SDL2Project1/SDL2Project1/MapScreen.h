@@ -4,6 +4,10 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include "Player.h"
+#include <fstream>
+#include "MapObject.h"
+#include <list>
+
 class MapScreen
 {
 public:
@@ -15,6 +19,9 @@ public:
 	Player*						player;
 	// 2D array representing map; wall = 0, ground = 1
 	int							map[10][10];
+	MapObject player;
+	MapObject door;
+	std::list<MapObject> mapObjects;
 	void						draw();
 
 };
