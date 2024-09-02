@@ -2,10 +2,13 @@
 class MapObject
 {
 public:
-
-	// play = 1, door = 2, glob = 3, mimic = 4, chest = 5
+	//1 = hero, 2 = door, 3 = glob, 4 = mimic, 5 = chest(note: mimic look like chest :O)
 	int type;
-	int i, j;
+	//position on map grid (map indexes)
+	int x, y; //eg map[x][y] is where an object may be
+
+	//when not active, destroy this object
 	bool active = true;
+
 };
 

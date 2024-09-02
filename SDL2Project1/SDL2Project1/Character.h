@@ -1,22 +1,31 @@
 #pragma once
+
 #include <iostream>
 #include <string>
 
+using namespace std;
+
+
 class Character
 {
+protected: //works the same as private, but children classes can access them
+	//attributes
+	int hp, hpMax, str, def, agi;
 public:
 	Character();
 	~Character();
-	void SetupStats(std::string name, int vita, int str, int dex, int intel);
-	void DisplayStats();
-	int GetVita();
-	int GetMaxVita();
-	int GetDex();
-	int GetDamage();
-	void TakeDamage(int dmg);
-	std::string GetName();
 
-protected:
-	std::string m_Name;
-	int m_Vita{}, m_Str{}, m_Dex{}, m_Intel{}, m_MaxVita{};
+	//behaviours/methods
+	void setupStats(int _hp, int _str, int _def, int _agi);
+	void displayStats();
+
+	int getHP();
+	int getHPMax();
+	int getAGI();
+
+	int getDamage();
+	void takeDamage(int dmg);
+
+	string getName();
 };
+
